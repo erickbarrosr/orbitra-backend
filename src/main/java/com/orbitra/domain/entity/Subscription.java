@@ -18,6 +18,28 @@ public class Subscription {
     private LocalDate nextBillingDate;
 
     public Subscription(UUID id, Plan plan, LocalDate startDate, LocalDateTime createdAt) {
+        this(id, plan, SubscriptionStatus.ACTIVE, startDate, startDate.plusMonths(1), createdAt);
+    }
+
+    public static Subscription restore(
+            UUID id,
+            Plan plan,
+            SubscriptionStatus status,
+            LocalDate startDate,
+            LocalDate nextBillingDate,
+            LocalDateTime createdAt
+    ) {
+        return new Subscription(id, plan, status, startDate, nextBillingDate, createdAt);
+    }
+
+    private Subscription(
+            UUID id,
+            Plan plan,
+            SubscriptionStatus status,
+            LocalDate startDate,
+            LocalDate nextBillingDate,
+            LocalDateTime createdAt
+    ) {
 
         if (id == null) {
             throw new DomainException("Subscription ID cannot be null");
@@ -27,8 +49,16 @@ public class Subscription {
             throw new DomainException("Plan cannot be null");
         }
 
+        if (status == null) {
+            throw new DomainException("Status cannot be null");
+        }
+
         if (startDate == null) {
             throw new DomainException("Start date cannot be null");
+        }
+
+        if (nextBillingDate == null) {
+            throw new DomainException("Next billing date cannot be null");
         }
 
         if (createdAt == null) {
@@ -37,9 +67,9 @@ public class Subscription {
 
         this.id = id;
         this.plan = plan;
-        this.status = SubscriptionStatus.ACTIVE;
+        this.status = status;
         this.startDate = startDate;
-        this.nextBillingDate = startDate.plusMonths(1);
+        this.nextBillingDate = nextBillingDate;
         this.createdAt = createdAt;
     }
 
