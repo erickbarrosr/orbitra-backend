@@ -21,17 +21,6 @@ public class Subscription {
         this(id, plan, SubscriptionStatus.ACTIVE, startDate, startDate.plusMonths(1), createdAt);
     }
 
-    public static Subscription restore(
-            UUID id,
-            Plan plan,
-            SubscriptionStatus status,
-            LocalDate startDate,
-            LocalDate nextBillingDate,
-            LocalDateTime createdAt
-    ) {
-        return new Subscription(id, plan, status, startDate, nextBillingDate, createdAt);
-    }
-
     private Subscription(
             UUID id,
             Plan plan,
@@ -71,6 +60,17 @@ public class Subscription {
         this.startDate = startDate;
         this.nextBillingDate = nextBillingDate;
         this.createdAt = createdAt;
+    }
+
+    public static Subscription restore(
+            UUID id,
+            Plan plan,
+            SubscriptionStatus status,
+            LocalDate startDate,
+            LocalDate nextBillingDate,
+            LocalDateTime createdAt
+    ) {
+        return new Subscription(id, plan, status, startDate, nextBillingDate, createdAt);
     }
 
     public void cancel() {
@@ -136,8 +136,7 @@ public class Subscription {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Subscription)) return false;
-        Subscription that = (Subscription) o;
+        if (!(o instanceof Subscription that)) return false;
         return id.equals(that.id);
     }
 

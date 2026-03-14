@@ -11,7 +11,7 @@ public class Plan {
 
     private final UUID id;
     private final LocalDateTime createdAt;
-    private String name;
+    private final String name;
     private BigDecimal price;
 
     public Plan(UUID id, String name, BigDecimal price, LocalDateTime createdAt) {
@@ -64,8 +64,7 @@ public class Plan {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Plan)) return false;
-        Plan plan = (Plan) o;
+        if (!(o instanceof Plan plan)) return false;
         return id.equals(plan.id);
     }
 
